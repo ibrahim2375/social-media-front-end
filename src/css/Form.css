@@ -1,0 +1,10 @@
+form {
+  padding: 20px;
+  /* width: 80%; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.MuiInputBase-input {
+  color: #777 !important;
+} 
