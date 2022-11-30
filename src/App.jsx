@@ -1,34 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+//pages
+import Home from "./pages/Home/index";
+import Login from "./pages/Login/index";
+import Register from "./pages/Register/index";
+import Profile from "./pages/Profile/index";
+//themeContext
+import { ThemeContext } from "./Hooks/ThemeContext.jsx";
+//redux
+import { useSelector } from "react-redux";
+//css
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [theme] = useState({
+    normalDark: "#242526",
+    // dark: "#0A0A0A"
+    dark: "#1c1e21",
+    light: "white",
+    mainColor: "#33DDFB",
+  });
+  const user = useSelector((state) => state.user);
+  const mode = useSelector((state) => state.mode);
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="App" style={{
+      height: "100vh",
+      backgroundColor: mode === 'light' ? theme.light : theme.dark
+    }}>
+      <ThemeContext.Provider value={theme}>
+        <Router>
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={user ? <Navigate to="/home" replace /> : <Login />}
+            />
+            <Route
+              path="/register"
+              element={user ? <Navigate to="/home" replace /> : <Register />}
+            />
+            <Route
+              path="/home"
+              element={user ? <Home /> : <Navigate to="/" replace />}
+            />
+            <Route
+              path="/profile/:userId"
+              element={user ? <Profile /> : <Navigate to="/" replace />}
+            />
+          </Routes>
+        </Router>
+      </ThemeContext.Provider>
     </div>
-  )
+  );
 }
-
-export default App
+export default App;
