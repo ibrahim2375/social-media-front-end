@@ -6,6 +6,8 @@ const initialState = {
     token: null,
     posts: [],
     userPosts: [],
+    recentSearch: [],
+    othersFriends: [],
 }
 export const authSlice = createSlice({
     name: "auth",
@@ -29,6 +31,9 @@ export const authSlice = createSlice({
                 console.log("there is no friends yet");
             }
         },
+        setOthersFriends: (state, action) => {
+            state.othersFriends = action.payload.othersFriends
+        },
         setPosts: (state, action) => {
             state.posts = action.payload.posts;
         },
@@ -40,10 +45,19 @@ export const authSlice = createSlice({
             state.posts = updatePosts;
         },
         setUserPosts: (state, action) => {
+
             state.userPosts = action.payload.userPosts;
+        },
+        setRecentSearch: (state, action) => {
+            const filterRecent = state.recentSearch.filter(resentUser => resentUser?._id === action.payload?.recentSearch?._id)
+            if (filterRecent.length == 0) {
+                //     state.recentSearch.push.apply(state.recentSearch, action.payload.recentSearch)
+                state.recentSearch = [...state.recentSearch, ...action.payload.recentSearch];
+            }
+            // state.recentSearch = []
         },
     },
 })
 
-export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost, setUserPosts } = authSlice.actions;
+export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost, setUserPosts, setRecentSearch, setOthersFriends } = authSlice.actions;
 export default authSlice.reducer;

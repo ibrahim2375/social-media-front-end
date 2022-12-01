@@ -12,7 +12,9 @@ import UserImg from "../../components/UserImg";
 import UserInfo from "../widgets/UserInfo";
 import MyPost from "../widgets/MyPost";
 import Post from "../widgets/Post";
-import FriendsList from "../widgets/FriendsList";
+// import FriendsList from "../widgets/FriendsList";OthersFriends;
+import OthersFriends from "../widgets/OthersFriends";
+
 import AddRemoveFriendButton from "../../components/AddRemoveFriendButton";
 //redux
 import { setUserPosts } from "../../redux/index";
@@ -107,7 +109,7 @@ function Profile() {
                     {userData?.firstname + " " + userData?.lastname}
                   </Typography>
                   <Typography sx={{ color: "#ccc", fontSize: "16px" }}>
-                    {userData?.friends?.length} Friends
+                    {userData?.friends?.length} Followers
                   </Typography>
                 </Box>
               </Box>
@@ -139,7 +141,8 @@ function Profile() {
               userId={param?.userId}
               picturePath={userData?.picturePath}
             />
-            <FriendsList userId={param?.userId} />
+            {/* <FriendsList userId={param?.userId} /> */}
+            <OthersFriends userId={param?.userId} />
           </Box>
 
           <Box

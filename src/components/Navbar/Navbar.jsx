@@ -19,10 +19,12 @@ import { ThemeContext } from "../../Hooks/ThemeContext";
 //components
 import BadgeAvatars from "./userAvatar";
 import BoxList from "./MobileBoxList";
+import Search from "../Search";
 //css
 import "../../css/Navbar.css";
 
 function Navbar() {
+  const [searchSection, setSearchSection] = useState(false);
   const [showNavList, setShowNavList] = useState(false);
   const theme = useContext(ThemeContext);
   const Navigate = useNavigate();
@@ -51,6 +53,7 @@ function Navbar() {
           SocialM
         </Typography>
         <InputBase
+          onFocus={() => setSearchSection(true)}
           sx={{
             ml: 1,
             flex: 1,
@@ -62,9 +65,9 @@ function Navbar() {
           }}
           placeholder="Search...."
         />
-        <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+        {/* <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
           <SearchIcon sx={{ color: "#ccc" }} />
-        </IconButton>
+        </IconButton> */}
       </div>
       <div className="right_side">
         {isNonMobileScreen && (
@@ -105,6 +108,7 @@ function Navbar() {
         </IconButton>
       </div>
       {showNavList && <BoxList />}
+      {searchSection && <Search setSearchSection={setSearchSection} />}
     </nav>
   );
 }

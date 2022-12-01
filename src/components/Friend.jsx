@@ -28,9 +28,9 @@ function Friend({ friendId, name, picturePath, postTime, work }) {
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
-
   //check if is friend or not
-  const isFriend = friends.find((friend) => friend._id === friendId);
+  // const isFriend = friends.find((friend) => friend._id === friendId)
+  const isFriend = friends.filter((friend) => friend._id === friendId);
   //add or remove friend
   const addOrRemoveFriend = async () => {
     const response = await fetch(
@@ -83,7 +83,7 @@ function Friend({ friendId, name, picturePath, postTime, work }) {
 
       {friendId !== _id && (
         <IconButton onClick={() => addOrRemoveFriend()}>
-          {isFriend ? (
+          {isFriend.length > 0 ? (
             <PersonRemoveIcon
               className="mui_icon"
               sx={{ color: mode === "light" ? theme.dark : theme.light }}

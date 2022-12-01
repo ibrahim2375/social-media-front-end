@@ -6,17 +6,17 @@ import Friend from "../../components/Friend";
 //skeleton components
 import ContactSkeleton from "../../skeleton/ContactSkeleton";
 //redux
-import { setFriends } from "../../redux/index";
+import { setOthersFriends } from "../../redux/index";
 import { useSelector, useDispatch } from "react-redux";
 
-function FriendsList({ userId }) {
+function OthersFriends({ userId }) {
   const [loading, setloading] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const theme = useContext(ThemeContext);
   const mode = useSelector((state) => state.mode);
-  const friends = useSelector((state) => state.user.friends);
+  const friends = useSelector((state) => state.othersFriends);
 
   const getUserFriends = async () => {
     setloading(true);
@@ -27,8 +27,8 @@ function FriendsList({ userId }) {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    const friends = await response.json();
-    dispatch(setFriends({ friends }));
+    const othersFriends = await response.json();
+    dispatch(setOthersFriends({ othersFriends }));
     setloading(false);
   };
 
@@ -81,4 +81,4 @@ function FriendsList({ userId }) {
   );
 }
 
-export default FriendsList;
+export default OthersFriends;
