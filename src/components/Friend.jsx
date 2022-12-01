@@ -14,6 +14,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { setFriends } from "../redux/index";
 //context
 import { ThemeContext } from "../Hooks/ThemeContext";
+//time ago
+import TimeAgo from "react-timeago";
+import EnString from "react-timeago/lib/language-strings/en";
+import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
+const formatter = buildFormatter(EnString);
+
 function Friend({ friendId, name, picturePath, postTime, work }) {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
@@ -52,7 +58,7 @@ function Friend({ friendId, name, picturePath, postTime, work }) {
       <Box display="flex" alignItems="center" gap="20px">
         <UserImg image={picturePath} />
         {/* user data */}
-        <Link to={`/profile/${friendId}`}>
+        <a href={`/profile/${friendId}`}>
           {/* if not work try navigate(0)*/}
           <Box>
             <Typography
@@ -62,7 +68,7 @@ function Friend({ friendId, name, picturePath, postTime, work }) {
             </Typography>
             {postTime && (
               <Typography sx={{ color: "#ccc", fontSize: "10px" }}>
-                {postTime}
+                <TimeAgo date={postTime} formatter={formatter} />
               </Typography>
             )}
             {work && (
@@ -71,10 +77,10 @@ function Friend({ friendId, name, picturePath, postTime, work }) {
               </Typography>
             )}
           </Box>
-        </Link>
+        </a>
       </Box>
       {/* add and remove user icon */}
-      
+
       {friendId !== _id && (
         <IconButton onClick={() => addOrRemoveFriend()}>
           {isFriend ? (

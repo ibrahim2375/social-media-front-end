@@ -35,6 +35,9 @@ function Navbar() {
     <nav
       style={{
         backgroundColor: mode === "light" ? theme.light : theme.normalDark,
+        position: "sticky",
+        top: 0,
+        zIndex: 90,
       }}
     >
       <div className="left_side">
@@ -66,10 +69,12 @@ function Navbar() {
       <div className="right_side">
         {isNonMobileScreen && (
           <div className="desktop_screen_icons">
-             {/* <HomeIcon
-              className="mui_icon"
-              sx={{ color: mode === "light" ? theme.dark : theme.light }}
-            /> */}
+            <IconButton onClick={() => Navigate("/home")}>
+              <HomeIcon
+                className="mui_icon"
+                sx={{ color: mode === "light" ? theme.dark : theme.light }}
+              />
+            </IconButton>
             <IconButton onClick={() => dispatch(setMode())}>
               {mode === "light" ? (
                 <LightMode

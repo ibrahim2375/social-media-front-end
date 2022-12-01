@@ -11,6 +11,7 @@ import { setFriends } from "../redux/index";
 import { ThemeContext } from "../Hooks/ThemeContext";
 
 function AddRemoveFriendButton({ friendId }) {
+
   const dispatch = useDispatch();
   const theme = useContext(ThemeContext);
   const mode = useSelector((state) => state.mode);
@@ -19,7 +20,7 @@ function AddRemoveFriendButton({ friendId }) {
   const friends = useSelector((state) => state.user.friends);
 
   //check if is friend or not
-  const isFriend = friends.find((friend) => friend._id === friendId);
+  let isFriend = friends.find((friend) => friend._id === friendId);
 
   //add or remove friend
   const addOrRemoveFriend = async () => {
@@ -36,6 +37,8 @@ function AddRemoveFriendButton({ friendId }) {
     const data = await response.json();
     dispatch(setFriends({ friends: data }));
   };
+
+
 
   return (
     <Box>

@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Poppins:ital,wght@1,100&family=Solway:wght@400;500&display=swap");
+#root {
+  --main-color: #33ddfb;
+  --scrollbar-bg: #242526;
+  /* --scrollbar-bg: #1c1e21; */
+}
 * {
   box-sizing: border-box;
   padding: 0;
@@ -14,14 +19,24 @@ body {
   font-family: "Hachi Maru Pop", cursive;
   font-family: "Poppins", sans-serif;
   font-family: "Solway", serif;
+  /* scroll-behavior: smooth; */
 }
-#root{
-  --main-color: #33DDFB;
+html::-webkit-scrollbar {
+  width: 10px;
 }
+html::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
 /* general styles */
 .mui_icon {
   cursor: pointer;
 }
-.mui_icon:hover{
+.mui_icon:hover {
   color: var(--main-color);
 }

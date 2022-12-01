@@ -47,7 +47,7 @@ function Home() {
           gap="0.5rem"
         >
           <Advertisement />
-          <FriendsList />
+          <FriendsList userId={_id} />
         </Box>
       </Box>
     </Box>

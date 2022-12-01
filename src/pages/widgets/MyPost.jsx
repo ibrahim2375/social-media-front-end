@@ -18,7 +18,7 @@ import ImageIcon from "@mui/icons-material/Image";
 import UserImg from "../../components/UserImg";
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "../../redux/index";
+import { setPosts, setUserPosts } from "../../redux/index";
 //context
 import { ThemeContext } from "../../Hooks/ThemeContext";
 
@@ -78,7 +78,7 @@ function MyPostWidget({ picturePath }) {
       >
         <UserImg image={picturePath} />
         <InputBase
-          placeholder="What's your idea...?"
+          placeholder="What's on your mind...?"
           onChange={(e) => setDescription(e.target.value)}
           value={description}
           sx={{

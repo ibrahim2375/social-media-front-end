@@ -16,9 +16,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { setMode, setLogout } from "../../redux/index";
 //context
 import { ThemeContext } from "../../Hooks/ThemeContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function MenuItems() {
   const theme = useContext(ThemeContext);
+  const Navigate = useNavigate();
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.mode);
   // const user = useSelector((state) => state.user);
@@ -36,7 +37,7 @@ export default function MenuItems() {
       {!isNonMobileScreen && (
         <MenuList>
           {/* Home */}
-          {/* <MenuItem>
+          <MenuItem onClick={() => Navigate("/home")}>
             <ListItemIcon>
               <HomeIcon
                 className="mui_icon"
@@ -49,7 +50,7 @@ export default function MenuItems() {
             >
               Home
             </Typography>
-          </MenuItem> */}
+          </MenuItem>
           {/* change mode */}
           <MenuItem onClick={() => dispatch(setMode())}>
             <ListItemIcon>

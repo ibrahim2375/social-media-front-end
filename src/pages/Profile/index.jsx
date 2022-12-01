@@ -3,13 +3,16 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
+//skeleton components
+import ProfileHeadSkeleton from "../../skeleton/ProfileHeadSkeleton";
+import PostSkeleton from "../../skeleton/PostSkeleton";
 //components
 import Navbar from "../../components/Navbar/Navbar";
 import UserImg from "../../components/UserImg";
 import UserInfo from "../widgets/UserInfo";
 import MyPost from "../widgets/MyPost";
 import Post from "../widgets/Post";
+import FriendsList from "../widgets/FriendsList";
 import AddRemoveFriendButton from "../../components/AddRemoveFriendButton";
 //redux
 import { setUserPosts } from "../../redux/index";
@@ -19,6 +22,8 @@ import { ThemeContext } from "../../Hooks/ThemeContext";
 //react router dom
 import { useParams } from "react-router-dom";
 function Profile() {
+  const [userLoading, setUserLoading] = useState(false);
+  const [postsLoading, setPostsLoading] = useState(false);
   const [userData, setUserData] = useState(null);
   const param = useParams();
   const dispatch = useDispatch();
@@ -31,6 +36,7 @@ function Profile() {
   const isNonMobileScreen = useMediaQuery("(min-width: 990px)");
   // handel user data
   const getUserData = async () => {
+    setUserLoading(true);
     const response = await fetch(
       `${import.meta.env.VITE_APP_API}/user/${param?.userId}`,
       {
@@ -40,9 +46,11 @@ function Profile() {
     );
     const data = await response.json();
     setUserData(data);
+    setUserLoading(false);
   };
   //    get posts of spcific user
   const getUserPosts = async () => {
+    setPostsLoading(true);
     const response = await fetch(
       `${import.meta.env.VITE_APP_API}/posts/${param?.userId}`,
       {
@@ -52,6 +60,7 @@ function Profile() {
     );
     const userPosts = await response.json();
     dispatch(setUserPosts({ userPosts }));
+    setPostsLoading(false);
   };
 
   if (!userPosts) {
@@ -73,36 +82,40 @@ function Profile() {
         <Box display="flex" flexDirection="column" justifyContent="center">
           <Box backgroundColor="black" height="100px" width="100%"></Box>
           {/* img and name */}
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            padding=" 1rem 3rem"
-          >
-            <Box display="flex" alignItems="center" gap="30px">
-              {/* profile img */}
-              {/* {isNonMobileScreen ? ( */}
-              {/* <UserImg image={userData?.picturePath} size={"170px"} /> */}
-              {/* // ) : ( */}
-              <UserImg image={userData?.picturePath} size={"70px"} />
-              {/* // )} */}
+          {userLoading ? (
+            <ProfileHeadSkeleton />
+          ) : (
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              padding=" 1rem 3rem"
+            >
+              <Box display="flex" alignItems="center" gap="30px">
+                {/* profile img */}
+                {/* {isNonMobileScreen ? ( */}
+                {/* <UserImg image={userData?.picturePath} size={"170px"} /> */}
+                {/* // ) : ( */}
+                <UserImg image={userData?.picturePath} size={"70px"} />
+                {/* // )} */}
 
-              {/* name and number of friends */}
-              <Box>
-                <Typography
-                  sx={{ color: mode === "light" ? theme.dark : theme.light }}
-                >
-                  {userData?.firstname + " " + userData?.lastname}
-                </Typography>
-                <Typography sx={{ color: "#ccc", fontSize: "16px" }}>
-                  {userData?.friends?.length} Friends
-                </Typography>
+                {/* name and number of friends */}
+                <Box>
+                  <Typography
+                    sx={{ color: mode === "light" ? theme.dark : theme.light }}
+                  >
+                    {userData?.firstname + " " + userData?.lastname}
+                  </Typography>
+                  <Typography sx={{ color: "#ccc", fontSize: "16px" }}>
+                    {userData?.friends?.length} Friends
+                  </Typography>
+                </Box>
               </Box>
+              {/* add friend */}
+              <AddRemoveFriendButton friendId={param?.userId} />
+              {/* end of add friend */}
             </Box>
-            {/* add friend */}
-            <AddRemoveFriendButton friendId={param?.userId} />
-            {/* end of add friend */}
-          </Box>
+          )}
           {/* img and name */}
         </Box>
         <Divider />
@@ -116,11 +129,17 @@ function Profile() {
           gap="1.5rem"
           padding="20px"
         >
-          <Box flexBasis={isNonMobileScreen ? "30%" : undefined}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap="20px"
+            flexBasis={isNonMobileScreen ? "30%" : undefined}
+          >
             <UserInfo
               userId={param?.userId}
               picturePath={userData?.picturePath}
             />
+            <FriendsList userId={param?.userId} />
           </Box>
 
           <Box
@@ -132,8 +151,12 @@ function Profile() {
             {user?._id === param?.userId && (
               <MyPost picturePath={user?.picturePath} />
             )}
-            {userPosts?.length > 0 &&
-              userPosts?.map((post) => <Post key={post?._id} post={post} />)}
+            {postsLoading
+              ? Array.from({ length: 5 }).map((s, i) => (
+                  <PostSkeleton key={i} />
+                ))
+              : userPosts?.length > 0 &&
+                userPosts?.map((post) => <Post key={post?._id} post={post} />)}
           </Box>
         </Box>
         {/* components */}
