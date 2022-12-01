@@ -12,8 +12,8 @@ import DropZone from "react-dropzone";
 //icons
 import EditIcon from "@mui/icons-material/Edit";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-//redux
 import { useNavigate } from "react-router-dom";
+//redux
 import { useDispatch, useSelector } from "react-redux";
 //components
 import { CustomInput } from "../CustomInput";
@@ -47,10 +47,13 @@ function Form() {
       formData.append(value, values[value]);
     }
     formData.append("picturePath", values.picture.name);
-    const response = await fetch(`http://localhost:5000/auth/register`, {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API}/auth/register`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
     const data = await response.json();
 
     if (data?.error) {
@@ -62,7 +65,12 @@ function Form() {
   };
 
   return (
-    <>
+    <Box
+      style={{
+        height: "100vh",
+        backgroundColor: mode === "light" ? theme.normalLight : theme.dark,
+      }}
+    >
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
@@ -240,7 +248,7 @@ function Form() {
           </form>
         )}
       </Formik>
-    </>
+    </Box>
   );
 }
 

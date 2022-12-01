@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 import UserAvatar from "./userAvatar";
 import MenuItems from "./MenuItems";
 //redux
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setMode } from "../../redux/index";
 //context
@@ -13,8 +13,9 @@ import { ThemeContext } from "../../Hooks/ThemeContext";
 function MobileBoxList() {
   const theme = useContext(ThemeContext);
   const dispatch = useDispatch();
-  //   const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const mode = useSelector((state) => state.mode);
+  const fullName = `${user?.firstname} ${user?.lastname}`;
   return (
     <Box
       position="fixed"
@@ -28,21 +29,25 @@ function MobileBoxList() {
       borderRadius="10px"
       backgroundColor={mode === "light" ? theme.light : theme.normalDark}
     >
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        gap="10px"
-        boxShadow=" 0 0 .5rem rgba(0,0,0,.2)"
-        padding="10px"
-        borderRadius="5px"
-        marginBottom="5px"
-      >
-        <UserAvatar />
-        <Typography sx={{ color: mode === "light" ? theme.dark : theme.light }}>
-          Ibrahim Abdelerahman
-        </Typography>
-      </Box>
+      <a href={`/profile/${user?._id}`}>
+        <Box
+          display="flex"
+          justifyContent="flex-start"
+          alignItems="center"
+          gap="10px"
+          boxShadow=" 0 0 .5rem rgba(0,0,0,.2)"
+          padding="10px"
+          borderRadius="5px"
+          marginBottom="5px"
+        >
+          <UserAvatar />
+          <Typography
+            sx={{ color: mode === "light" ? theme.dark : theme.light }}
+          >
+            {fullName ?? null}
+          </Typography>
+        </Box>
+      </a>
       <Box position="relative">
         <MenuItems />
       </Box>

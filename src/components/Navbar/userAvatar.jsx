@@ -3,6 +3,9 @@ import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
+// redux
+//redux
+import { useSelector } from "react-redux";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -40,16 +43,17 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 export default function BadgeAvatars() {
+  const user = useSelector((state) => state.user);
+  const userProfile = `${import.meta.env.VITE_APP_API}/assets/${
+    user?.picturePath
+  }`;
   return (
     <StyledBadge
       overlap="circular"
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       variant="dot"
     >
-      <Avatar
-        alt="Remy Sharp"
-        src="https://scontent.fcai20-6.fna.fbcdn.net/v/t1.6435-9/129248820_763369290913786_3738638183660161962_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=174925&_nc_ohc=zJ-0wd53A5cAX9rTHzc&_nc_ht=scontent.fcai20-6.fna&oh=00_AfDCUA9Ej829l0VgpN6KkEUez0WAmdkMk5iJOpyP-TUEEw&oe=63ADB86Dhttps://scontent.fcai20-6.fna.fbcdn.net/v/t1.6435-9/129248820_763369290913786_3738638183660161962_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=174925&_nc_ohc=zJ-0wd53A5cAX9rTHzc&_nc_ht=scontent.fcai20-6.fna&oh=00_AfDCUA9Ej829l0VgpN6KkEUez0WAmdkMk5iJOpyP-TUEEw&oe=63ADB86D"
-      />
+      <Avatar alt={`avatar`} src={userProfile} />
     </StyledBadge>
   );
 }

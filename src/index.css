@@ -15,7 +15,13 @@ body {
   font-family: "Poppins", sans-serif;
   font-family: "Solway", serif;
 }
+#root{
+  --main-color: #33DDFB;
+}
 /* general styles */
 .mui_icon {
   cursor: pointer;
+}
+.mui_icon:hover{
+  color: var(--main-color);
 }

@@ -4,7 +4,6 @@ import {
   Typography,
   useMediaQuery,
   Button,
-  TextField,
 } from "@mui/material";
 import { Formik } from "formik";
 //components
@@ -33,7 +32,8 @@ function Form() {
   const isNonMobileScreen = useMediaQuery("(min-width: 768px)");
 
   const handleFormSubmit = async (values, onSubmitProps) => {
-    const response = await fetch(`http://localhost:5000/auth/login`, {
+    // const response = await fetch(`http://localhost:5000/auth/login`, {
+    const response = await fetch(`${import.meta.env.VITE_APP_API}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -55,7 +55,12 @@ function Form() {
   };
 
   return (
-    <>
+    <Box
+      style={{
+        height: "100vh",
+        backgroundColor: mode === "light" ? theme.normalLight : theme.dark,
+      }}
+    >
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
@@ -141,7 +146,7 @@ function Form() {
         )}
         {/* */}
       </Formik>
-    </>
+    </Box>
   );
 }
 

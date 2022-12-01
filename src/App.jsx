@@ -22,15 +22,20 @@ function App() {
     // dark: "#0A0A0A"
     dark: "#1c1e21",
     light: "white",
+    normalLight: "#f0f2f5",
     mainColor: "#33DDFB",
   });
   const user = useSelector((state) => state.user);
   const mode = useSelector((state) => state.mode);
+
   return (
-    <div className="App" style={{
-      height: "100vh",
-      backgroundColor: mode === 'light' ? theme.light : theme.dark
-    }}>
+    <div
+      className="App"
+      style={{
+        minHeight: "100vh",
+        backgroundColor: mode === "light" ? theme.normalLight : theme.dark,
+      }}
+    >
       <ThemeContext.Provider value={theme}>
         <Router>
           <Routes>

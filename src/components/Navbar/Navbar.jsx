@@ -9,6 +9,7 @@ import { DarkMode, LightMode } from "@mui/icons-material";
 import MessageIcon from "@mui/icons-material/Message";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
+import HomeIcon from "@mui/icons-material/Home";
 //redux
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -50,8 +51,8 @@ function Navbar() {
           sx={{
             ml: 1,
             flex: 1,
-            backgroundColor: mode === "light" ? theme.light : theme.normalDark,
-            border: "1px solid #ccc",
+            backgroundColor: mode === "dark" ? "#333" : "",
+            border: mode === "light" && "1px solid #ccc",
             borderRadius: "10px",
             color: mode === "light" ? theme.dark : theme.light,
             paddingLeft: "10px",
@@ -65,6 +66,10 @@ function Navbar() {
       <div className="right_side">
         {isNonMobileScreen && (
           <div className="desktop_screen_icons">
+             {/* <HomeIcon
+              className="mui_icon"
+              sx={{ color: mode === "light" ? theme.dark : theme.light }}
+            /> */}
             <IconButton onClick={() => dispatch(setMode())}>
               {mode === "light" ? (
                 <LightMode

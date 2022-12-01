@@ -10,12 +10,13 @@ import MessageIcon from "@mui/icons-material/Message";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import HomeIcon from "@mui/icons-material/Home";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { setMode, setLogout } from "../../redux/index";
 //context
 import { ThemeContext } from "../../Hooks/ThemeContext";
-
+import { Link } from "react-router-dom";
 export default function MenuItems() {
   const theme = useContext(ThemeContext);
   const dispatch = useDispatch();
@@ -34,6 +35,21 @@ export default function MenuItems() {
     >
       {!isNonMobileScreen && (
         <MenuList>
+          {/* Home */}
+          {/* <MenuItem>
+            <ListItemIcon>
+              <HomeIcon
+                className="mui_icon"
+                sx={{ color: mode === "light" ? theme.dark : theme.light }}
+              />
+            </ListItemIcon>
+            <Typography
+              variant="inherit"
+              sx={{ color: mode === "light" ? theme.dark : theme.light }}
+            >
+              Home
+            </Typography>
+          </MenuItem> */}
           {/* change mode */}
           <MenuItem onClick={() => dispatch(setMode())}>
             <ListItemIcon>
@@ -67,7 +83,7 @@ export default function MenuItems() {
               variant="inherit"
               sx={{ color: mode === "light" ? theme.dark : theme.light }}
             >
-              Change Mode
+              Messsanger
             </Typography>
           </MenuItem>
           {/* Help */}
